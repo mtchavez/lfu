@@ -20,3 +20,8 @@ func newFreqNode() *freqNode {
 	n.next = n
 	return n
 }
+
+func (fn *freqNode) remove() {
+	fn.prev.next = fn.next
+	fn.next.prev = fn.prev
+}
