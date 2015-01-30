@@ -12,8 +12,11 @@ type freqNode struct {
 }
 
 func newFreqNode() *freqNode {
-	return &freqNode{
+	n := &freqNode{
 		value: 0,
 		items: set.NewSet(),
 	}
+	n.prev = n
+	n.next = n
+	return n
 }

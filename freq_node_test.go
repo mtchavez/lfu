@@ -13,4 +13,7 @@ func Test_newFreqNode(t *testing.T) {
 	if size != 0 {
 		t.Fatalf("Expected items to be empty but got %+v", size)
 	}
+	if fn.prev != fn || fn.next != fn {
+		t.Fatalf("Next and previous nodes should be self got prev: %+v and next: %+v", fn.prev, fn.next)
+	}
 }
