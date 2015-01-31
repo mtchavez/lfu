@@ -5,19 +5,23 @@ import (
 	"fmt"
 )
 
-type LFUCache struct {
+// Cache used to call core cache methods off of
+type Cache struct {
 	frequencies map[interface{}]*lfuItem
 	head        *freqNode
 }
 
-func NewLFU() *LFUCache {
-	return &LFUCache{
+// NewLFU initializes a new LFU cache and returns it
+func NewLFU() *Cache {
+	return &Cache{
 		frequencies: make(map[interface{}]*lfuItem),
 		head:        newFreqNode(),
 	}
 }
 
-func (c *LFUCache) Insert(key interface{}, value interface{}) (bool, error) {
+// Insert takes a key and a value to insert into the cache
+// Returns a boolean for successful insert and an error if failed
+func (c *Cache) Insert(key interface{}, value interface{}) (bool, error) {
 	_, found := c.frequencies[key]
 	if found {
 		return false, errors.New("Key already exists in cache")
@@ -31,10 +35,12 @@ func (c *LFUCache) Insert(key interface{}, value interface{}) (bool, error) {
 	return true, nil
 }
 
-func (c *LFUCache) Get(key interface{}) (interface{}, error) {
+// Get takes a key for an item in the cache to look up
+// Returns the data associated with that key and an
+func (c *Cache) Get(key interface{}) (interface{}, error) {
 	item, existing := c.frequencies[key]
 	if !existing {
-		return nil, errors.New(fmt.Sprintf("Key: %+v not found in cache", key))
+		return nil, fmt.Errorf("Key: %+v not found in cache", key)
 	}
 	freq := item.parent
 	nextFreq := freq.next
@@ -52,7 +58,9 @@ func (c *LFUCache) Get(key interface{}) (interface{}, error) {
 	return item.data, nil
 }
 
-func (c *LFUCache) GetLFUItem() (value interface{}, data interface{}) {
+// GetLFUItem returns the key and data of the least
+// frequently updated item in the cache or -1 and nil for not found
+func (c *Cache) GetLFUItem() (value interface{}, data interface{}) {
 	if len(c.frequencies) == 0 {
 		return -1, nil
 	}
