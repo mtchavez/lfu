@@ -29,19 +29,19 @@ func main() {
     // Insert existing key
     success, err := cache.Insert(42, "Nope")
     if !success {
-        fmt.Sprintf("Error inserting:", err)
+        fmt.Println("Error inserting:", err)
     }
 
     var data interface{}
     var e error
     // Get
     data, e = cache.Get(42)
-    fmt.Sprintf("Data for 42 is", data)
+    fmt.Println("Data for 42 is", data)
 
     // Get not found
     data, e = cache.Get(987654321)
     if e != nil {
-        fmt.Sprintf("Error on get:", e)
+        fmt.Println("Error on get:", e)
     }
 }
 
