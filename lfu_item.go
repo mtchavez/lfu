@@ -2,10 +2,10 @@ package lfu
 
 type lfuItem struct {
 	data   interface{}
-	parent int
+	parent *freqNode
 }
 
-func newlfuItem(data interface{}, parent int) *lfuItem {
+func newlfuItem(data interface{}, parent *freqNode) *lfuItem {
 	return &lfuItem{
 		data:   data,
 		parent: parent,

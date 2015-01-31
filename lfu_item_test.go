@@ -6,7 +6,7 @@ import (
 
 func Test_newlfuItem(t *testing.T) {
 	data := "My Data"
-	parent := 42
+	parent := newFreqNode()
 	item := newlfuItem(data, parent)
 	if item.data != data {
 		t.Fatalf("Expected data to be %+v but got %+v", data, item.data)
