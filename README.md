@@ -12,7 +12,7 @@ LFU cache in Go offering O(1) Get and Insert [outlined here](http://dhruvbird.co
 
 ## Usage
 
-```
+```go
 package main
 
 import (
