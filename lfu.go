@@ -6,18 +6,18 @@ import (
 )
 
 type LFUCache struct {
-	frequencies map[int]*lfuItem
+	frequencies map[interface{}]*lfuItem
 	head        *freqNode
 }
 
 func NewLFU() *LFUCache {
 	return &LFUCache{
-		frequencies: make(map[int]*lfuItem),
+		frequencies: make(map[interface{}]*lfuItem),
 		head:        newFreqNode(),
 	}
 }
 
-func (c *LFUCache) Insert(key int, value interface{}) (bool, error) {
+func (c *LFUCache) Insert(key interface{}, value interface{}) (bool, error) {
 	_, found := c.frequencies[key]
 	if found {
 		return false, errors.New("Key already exists in cache")
@@ -31,7 +31,7 @@ func (c *LFUCache) Insert(key int, value interface{}) (bool, error) {
 	return true, nil
 }
 
-func (c *LFUCache) Get(key int) (interface{}, error) {
+func (c *LFUCache) Get(key interface{}) (interface{}, error) {
 	item, existing := c.frequencies[key]
 	if !existing {
 		return nil, errors.New(fmt.Sprintf("Key: %+v not found in cache", key))
@@ -50,4 +50,13 @@ func (c *LFUCache) Get(key int) (interface{}, error) {
 		freq.remove()
 	}
 	return item.data, nil
+}
+
+func (c *LFUCache) GetLFUItem() (value interface{}, data interface{}) {
+	if len(c.frequencies) == 0 {
+		return -1, nil
+	}
+	// TODO: Try to avoid ToSlice on all items
+	item := c.frequencies[c.head.next.items.ToSlice()[0]]
+	return item.parent.value, item.data
 }

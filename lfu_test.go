@@ -52,3 +52,30 @@ func TestGet_notFound(t *testing.T) {
 		t.Fatalf("Expected no data to be found but got %+v", data)
 	}
 }
+
+func TestGetLFUItem(t *testing.T) {
+	cache := NewLFU()
+	cache.Insert(1, "guest:987654321")
+	cache.Insert(2, "user:42:123456789")
+	cache.Get(1)
+	cache.Get(1)
+	cache.Get(2)
+	value, data := cache.GetLFUItem()
+	if value != 2 {
+		t.Fatalf("Expected 2 to be LFU but got %+v", value)
+	}
+	if !reflect.DeepEqual(data, "user:42:123456789") {
+		t.Fatalf("Expected data for 2 to be returned but got %+v", data)
+	}
+}
+
+func TestGetLFUItem_emptyCache(t *testing.T) {
+	cache := NewLFU()
+	value, data := cache.GetLFUItem()
+	if value != -1 {
+		t.Fatalf("Expected -1 to be LFU for empty cache but got %+v", value)
+	}
+	if data != nil {
+		t.Fatalf("Expected data to be nil but got %+v", data)
+	}
+}
