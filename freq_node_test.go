@@ -31,3 +31,29 @@ func Test_freqNode_remove(t *testing.T) {
 		t.Fatalf("Expected node 2 to be removed and node1 and 3 to be linked")
 	}
 }
+
+func Test_getNewNode(t *testing.T) {
+	prev := newFreqNode()
+	prev.value = 1
+	next := newFreqNode()
+	prev.next = next
+	next.prev = prev
+	next.value = 3
+	n := getNewNode(2, prev, next)
+	if n == nil {
+		t.Fatalf("Expected a node to be returned but got nil")
+	}
+	if n.prev != prev {
+		t.Fatalf("Expected prev node to be set on new node got %+v", n.prev)
+	}
+	if n.next != next {
+		t.Fatalf("Expected next node to be set on new node got %+v", n.next)
+	}
+
+	if prev.next != n {
+		t.Fatalf("Expected new node to be after previous but got %+v", prev.next)
+	}
+	if next.prev != n {
+		t.Fatalf("Expected new node to be before the next node but got %+v", next.prev)
+	}
+}
