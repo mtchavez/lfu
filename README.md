@@ -59,10 +59,12 @@ a 2.3 GHz Intel Core i7:
 ```
 $ go test --bench=.*
 PASS
-BenchmarkInsert	 1000000	      1943 ns/op
-BenchmarkGet_EmptyCache	 2000000	       768 ns/op
-BenchmarkGet_AllMisses	 3000000	       534 ns/op
-BenchmarkGet_AllHits	 1000000	      1118 ns/op
+BenchmarkInsert	         1000000	      1904 ns/op
+BenchmarkParallelInsert	 1000000	      1875 ns/op
+BenchmarkGet_EmptyCache	 2000000	       882 ns/op
+BenchmarkGet_AllMisses	 2000000	       619 ns/op
+BenchmarkGet_AllHits	 1000000	      1206 ns/op
+BenchmarkParallelGet	 3000000	      1243 ns/op
 coverage: 100.0% of statements
 ```
 
