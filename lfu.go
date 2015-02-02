@@ -3,10 +3,12 @@ package lfu
 import (
 	"errors"
 	"fmt"
+	"sync"
 )
 
 // Cache used to call core cache methods off of
 type Cache struct {
+	sync.RWMutex
 	frequencies map[interface{}]*lfuItem
 	head        *freqNode
 }
@@ -22,6 +24,8 @@ func NewLFU() *Cache {
 // Insert takes a key and a value to insert into the cache
 // Returns a boolean for successful insert and an error if failed
 func (c *Cache) Insert(key interface{}, value interface{}) (bool, error) {
+	c.Lock()
+	defer c.Unlock()
 	_, found := c.frequencies[key]
 	if found {
 		return false, errors.New("Key already exists in cache")
@@ -38,6 +42,8 @@ func (c *Cache) Insert(key interface{}, value interface{}) (bool, error) {
 // Get takes a key for an item in the cache to look up
 // Returns the data associated with that key and an
 func (c *Cache) Get(key interface{}) (interface{}, error) {
+	c.RLock()
+	defer c.RUnlock()
 	item, existing := c.frequencies[key]
 	if !existing {
 		return nil, fmt.Errorf("Key: %+v not found in cache", key)
@@ -61,6 +67,8 @@ func (c *Cache) Get(key interface{}) (interface{}, error) {
 // GetLFUItem returns the key and data of the least
 // frequently updated item in the cache or -1 and nil for not found
 func (c *Cache) GetLFUItem() (value interface{}, data interface{}) {
+	c.RLock()
+	defer c.RUnlock()
 	if len(c.frequencies) == 0 {
 		return -1, nil
 	}
