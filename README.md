@@ -70,5 +70,4 @@ coverage: 100.0% of statements
 
 ## TODO
 
-* Make threadsafe
 * Some kind of eviction
