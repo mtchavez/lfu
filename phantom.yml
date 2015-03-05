@@ -1,0 +1,4 @@
+language: go:1.4
+commands:
+  - go get golang.org/x/tools/cmd/cover
+  - go test --bench=.* --cover
