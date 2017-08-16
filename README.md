@@ -56,18 +56,17 @@ func main() {
 ## Benhcmarks
 
 Get and insert methods are benchmarked. Results from OS X with
-a 2.3 GHz Intel Core i7:
+a 2.3 GHz Intel Core i7 on `go version go1.8.3 darwin/amd64`
 
 ```
-$ go test --bench=.*
-PASS
-BenchmarkInsert	         1000000	      1904 ns/op
-BenchmarkParallelInsert	 1000000	      1875 ns/op
-BenchmarkGet_EmptyCache	 2000000	       882 ns/op
-BenchmarkGet_AllMisses	 2000000	       619 ns/op
-BenchmarkGet_AllHits	 1000000	      1206 ns/op
-BenchmarkParallelGet	 3000000	      1243 ns/op
-coverage: 100.0% of statements
+# Updated: 2017-08-15
+
+BenchmarkInsert-8                1000000              1860 ns/op
+BenchmarkParallelInsert-8        1000000              1861 ns/op
+BenchmarkGet_EmptyCache-8        5000000               362 ns/op
+BenchmarkGet_AllMisses-8         3000000               732 ns/op
+BenchmarkGet_AllHits-8           1000000              1417 ns/op
+BenchmarkParallelGet-8           2000000              1405 ns/op
 ```
 
 ## TODO
