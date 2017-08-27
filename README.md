@@ -3,7 +3,7 @@
 [![Latest Version](http://img.shields.io/github/release/mtchavez/lfu.svg?style=flat-square)](https://github.com/mtchavez/lfu/releases)
 [![Build Status](https://travis-ci.org/mtchavez/lfu.svg)](https://travis-ci.org/mtchavez/lfu)
 [![Go Documentation](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](http://godoc.org/github.com/mtchavez/lfu)
-[![Coverage Status](https://coveralls.io/repos/github/mtchavez/lfu/badge.svg?branch=f-golang-dep)](https://coveralls.io/github/mtchavez/lfu?branch=f-golang-dep)
+[![Coverage Status](https://coveralls.io/repos/github/mtchavez/lfu/badge.svg?branch=master)](https://coveralls.io/github/mtchavez/lfu?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/mtchavez/lfu)](https://goreportcard.com/report/github.com/mtchavez/lfu)
 
 LFU cache in Go offering O(1) Get and Insert [outlined here](http://dhruvbird.com/lfu.pdf).
